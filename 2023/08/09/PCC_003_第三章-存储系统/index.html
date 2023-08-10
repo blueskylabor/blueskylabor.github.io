@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>ebxeax</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="第三章 存储系统存储器层次化结构多级存储系统  主存——辅存：实现虚拟存储系统，解决了贮存容量不够的问题 Cache——主存：解决了主存与CPU速度不匹配问题  存储器的分类存储介质分类半导体存储器 磁表面存储器 光存储器 存取方式相联存储器(Associative Memory)  如：”快表”，按照内容检索到存储位置进行读写 CAM(Content Addressed Memory)存储器 R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ebxeax">
+<meta property="og:url" content="http://ebxeax.github.io/2023/08/09/PCC_003_%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="ebxeax">
+<meta property="og:description" content="第三章 存储系统存储器层次化结构多级存储系统  主存——辅存：实现虚拟存储系统，解决了贮存容量不够的问题 Cache——主存：解决了主存与CPU速度不匹配问题  存储器的分类存储介质分类半导体存储器 磁表面存储器 光存储器 存取方式相联存储器(Associative Memory)  如：”快表”，按照内容检索到存储位置进行读写 CAM(Content Addressed Memory)存储器 R">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709102641709.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709102655653.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709102945108.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709104315290.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709104942008.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709153008450.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709153156526.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709153808790.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709154211175.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709154350099.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160051369.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160541650.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160516570.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709161754154.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160819688.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709161710201.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709161959829.jpg">
+<meta property="og:image" content="http://ebxeax.github.io/%5Cimage-20210709162041092.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709162521373.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709162844813.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709163324682.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709163618238.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709163633240.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709164040888.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709164210718.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709164429717.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709165436449.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709165255910.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709170229203.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709170437088.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709171022499.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710155908929.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160657540.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160632516.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160611419.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160717931.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710161341565.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710161553901.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710162114004.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710162816363.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710163921097.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710163946556.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710164353024.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710164408453.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710164220590.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710210420887.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710210349239.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710210433763.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215134861.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215455572.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215530770.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215516325.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710220127614.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710220109978.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710220724351.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710221911745.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710221918451.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222204893.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222220339.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222248750.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222307630.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222439230.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711160553389.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711160615752.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711160634017.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711164435610.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711164119361.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711165057274.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711165307359.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711170550046.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711170803320.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171649574.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171635987.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171740689.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171728702.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171818049.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171805412.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171901658.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171842837.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171945407.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171935529.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711172016851.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174441630.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174351441.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174421728.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174630870.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175036358.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175016518.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175220931.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175747460.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711181558957.jpg">
+<meta property="article:published_time" content="2023-08-09T03:00:41.016Z">
+<meta property="article:modified_time" content="2023-08-07T08:49:50.000Z">
+<meta property="article:author" content="ebx">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709102641709.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="ebxeax" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ebxeax</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ebxeax.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-PCC_003_第三章-存储系统" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/09/PCC_003_%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time class="dt-published" datetime="2023-08-09T03:00:41.016Z" itemprop="datePublished">2023-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="第三章-存储系统"><a href="#第三章-存储系统" class="headerlink" title="第三章 存储系统"></a>第三章 存储系统</h1><h2 id="存储器层次化结构"><a href="#存储器层次化结构" class="headerlink" title="存储器层次化结构"></a>存储器层次化结构</h2><h3 id="多级存储系统"><a href="#多级存储系统" class="headerlink" title="多级存储系统"></a>多级存储系统</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709102641709.jpg" alt="image-20210709102641709"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709102655653.jpg" alt="image-20210709102655653"></p>
+<p>主存——辅存：实现<strong>虚拟存储系统</strong>，<em>解决了贮存容量不够的问题</em></p>
+<p>Cache——主存：解决了主存与CPU速度不匹配问题</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709102945108.jpg" alt="image-20210709102945108"></p>
+<h3 id="存储器的分类"><a href="#存储器的分类" class="headerlink" title="存储器的分类"></a>存储器的分类</h3><h4 id="存储介质分类"><a href="#存储介质分类" class="headerlink" title="存储介质分类"></a>存储介质分类</h4><p>半导体存储器</p>
+<p>磁表面存储器</p>
+<p>光存储器</p>
+<h4 id="存取方式"><a href="#存取方式" class="headerlink" title="存取方式"></a>存取方式</h4><p>相联存储器(Associative Memory)  如：”快表”，按照内容检索到存储位置进行读写</p>
+<p>CAM(Content Addressed Memory)存储器</p>
+<p>RAM(Random Access Memory)随机存取存储器</p>
+<p>SAM(Sequential Access Memory)顺序存取存储器</p>
+<p>DAM(Direct Access Memory)直接存取存储器</p>
+<h4 id="信息的可改性"><a href="#信息的可改性" class="headerlink" title="信息的可改性"></a>信息的可改性</h4><p>读写存储器(Read&#x2F;Write Memory)可读可写（磁盘、内存、Cache）</p>
+<p>只写存储器(Read Only Memory)可读不可写（CD-ROM，BIOS通常写在ROM）</p>
+<h4 id="信息的可保存性"><a href="#信息的可保存性" class="headerlink" title="信息的可保存性"></a>信息的可保存性</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709104315290.jpg" alt="image-20210709104315290"></p>
+<h4 id="存储器的性能指标"><a href="#存储器的性能指标" class="headerlink" title="存储器的性能指标"></a>存储器的性能指标</h4><p>$$<br>\begin{align}<br>&amp;1.存储容量&#x3D;存储字数<em>字长（1M</em>8位）\<br>&amp;2.单位成本：每位价格&#x3D;\frac{总成本}{总容量}\<br>&amp;3.存储速度：数据传输率&#x3D;\frac{数据的宽度}{存储周期}&#x3D;\frac{存储字长}{存储周期}\<br>&amp;主存带宽:又称数据传输率，表示每秒从主存进出信息的最大数量，单位为字&#x2F;秒，字节&#x2F;秒(B&#x2F;s)，位&#x2F;秒(b&#x2F;s)\<br>\end{align}<br>$$</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709104942008.jpg" alt="image-20210709104942008"></p>
+<h2 id="主存储体的基本组成"><a href="#主存储体的基本组成" class="headerlink" title="主存储体的基本组成"></a>主存储体的基本组成</h2><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709153008450.jpg" alt="image-20210709153008450"></p>
+<p>一行存储元就是一个存储字，存储字长：8bit</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709153156526.jpg" alt="image-20210709153156526"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709153808790.jpg" alt="image-20210709153808790"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709154211175.jpg" alt="image-20210709154211175"></p>
+<p>计算引脚数量（数据线引脚+地址线引脚+读&#x2F;写控制线引脚+片选线引脚+等等）</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709154350099.jpg" alt="image-20210709154350099"></p>
+<p>可以通过描述如<br>$$<br>\begin{align}<br>&amp;64K*16位\<br>&amp;数据线:16根\<br>&amp;地址线:16根\<br>\end{align}<br>$$<br><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160051369.jpg" alt="image-20210709160051369"></p>
+<p>将按字寻址转换为对应的按字节寻址：将字地址算术左移两位后转为相应的十进制</p>
+<p>字地址：1</p>
+<p>算数左移2位后：100</p>
+<p>转为十进制：100 ——&gt;  4</p>
+<h2 id="SRAM和DRAM"><a href="#SRAM和DRAM" class="headerlink" title="SRAM和DRAM"></a>SRAM和DRAM</h2><h3 id="存储器特性对比"><a href="#存储器特性对比" class="headerlink" title="存储器特性对比"></a>存储器特性对比</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160541650.jpg" alt="image-20210709160541650"><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160516570.jpg" alt="image-20210709160516570"><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709161754154.jpg" alt="image-20210709161754154"></p>
+<h3 id="3-2-DRAM的刷新（由存储器独立完成，不需要CPU控制）"><a href="#3-2-DRAM的刷新（由存储器独立完成，不需要CPU控制）" class="headerlink" title="3.2 DRAM的刷新（由存储器独立完成，不需要CPU控制）"></a>3.2 DRAM的刷新（由存储器独立完成，不需要CPU控制）</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709160819688.jpg" alt="image-20210709160819688"></p>
+<p>左侧为单个的行地址译码 直接将地址送到译码器<br>$$<br>\begin{align}<br>&amp;2^n根选通线\<br>\end{align}<br>$$</p>
+<p>0000 0000 选择0号存储单元</p>
+<p>右侧为行列译码 高位地址送到行地址译码器 低位地址送到列地址译码器<br>$$<br>\begin{align}<br>&amp;存储单元排成n*n的矩阵,2^{\frac{n}{2}}+2^{\frac{n}{2}}根选通线\<br>\end{align}<br>$$</p>
+<p>0000 0000 选中0,0号存储单元</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709161710201.jpg" alt="image-20210709161710201"></p>
+<h4 id="地址线复用"><a href="#地址线复用" class="headerlink" title="地址线复用"></a>地址线复用</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709161959829.jpg" alt="image-20210709161959829"></p>
+<p><img src="/%5Cimage-20210709162041092.jpg" alt="image-20210709162041092"></p>
+<h2 id="ROM"><a href="#ROM" class="headerlink" title="ROM"></a>ROM</h2><h3 id="ROM的类型"><a href="#ROM的类型" class="headerlink" title="ROM的类型"></a>ROM的类型</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709162521373.jpg" alt="image-20210709162521373"></p>
+<h3 id="计算机内的重要ROM"><a href="#计算机内的重要ROM" class="headerlink" title="计算机内的重要ROM"></a>计算机内的重要ROM</h3><p>内存&#x3D;内存条+BIOS的芯片</p>
+<p>RAM和ROM统一编制</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709162844813.jpg" alt="image-20210709162844813"></p>
+<h2 id="主存储器与CPU的连接"><a href="#主存储器与CPU的连接" class="headerlink" title="主存储器与CPU的连接"></a>主存储器与CPU的连接</h2><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709163324682.jpg" alt="image-20210709163324682"></p>
+<p>数据总线（宽度&#x3D;存储字长）</p>
+<h3 id="位扩展（解决：数据总线宽度-存储芯片字长）"><a href="#位扩展（解决：数据总线宽度-存储芯片字长）" class="headerlink" title="位扩展（解决：数据总线宽度&gt;存储芯片字长）"></a>位扩展（解决：数据总线宽度&gt;存储芯片字长）</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709163618238.jpg" alt="image-20210709163618238"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709163633240.jpg" alt="image-20210709163633240"></p>
+<p>带横线表示低电平有效，不带横线表示高电平有效</p>
+<p><strong>CPU连接单个主存</strong></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709164040888.jpg" alt="image-20210709164040888"></p>
+<p><strong>CPU连接两块主存</strong></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709164210718.jpg" alt="image-20210709164210718"></p>
+<p>1号主存和2号主存连接相同的地址线，接收相同的地址，CPU可以同时对两块主存的同一地址进行读写</p>
+<p><strong>CPU连接多块主存</strong></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709164429717.jpg" alt="image-20210709164429717"></p>
+<h3 id="字扩展（增加主存的存储字数）"><a href="#字扩展（增加主存的存储字数）" class="headerlink" title="字扩展（增加主存的存储字数）"></a>字扩展（增加主存的存储字数）</h3><h4 id="线选法"><a href="#线选法" class="headerlink" title="线选法"></a>线选法</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709165436449.jpg" alt="image-20210709165436449"></p>
+<p>高地址11和00时产生总线冲突  高地址为11和00时不能使用</p>
+<h4 id="译码器片选法"><a href="#译码器片选法" class="headerlink" title="译码器片选法"></a>译码器片选法<img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709165255910.jpg" alt="image-20210709165255910"></h4><p> <img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709170229203.jpg" alt="image-20210709170229203"></p>
+<h3 id="字位同时扩展法"><a href="#字位同时扩展法" class="headerlink" title="字位同时扩展法"></a>字位同时扩展法</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709170437088.jpg" alt="image-20210709170437088"></p>
+<h3 id="译码器"><a href="#译码器" class="headerlink" title="译码器"></a>译码器</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210709171022499.jpg" alt="image-20210709171022499"></p>
+<h2 id="双端口RAM和多模块存储器（优化多核CPU访问一根内存条的速度）"><a href="#双端口RAM和多模块存储器（优化多核CPU访问一根内存条的速度）" class="headerlink" title="双端口RAM和多模块存储器（优化多核CPU访问一根内存条的速度）"></a>双端口RAM和多模块存储器（优化多核CPU访问一根内存条的速度）</h2><h3 id="双端口RAM"><a href="#双端口RAM" class="headerlink" title="双端口RAM"></a>双端口RAM</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710155908929.jpg" alt="image-20210710155908929"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160657540.jpg" alt="image-20210710160657540"> </p>
+<p>问题：</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160632516.jpg" alt="image-20210710160632516"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160611419.jpg" alt="image-20210710160611419"><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710160717931.jpg" alt="image-20210710160717931"></p>
+<p>优化多喝CPU访问一根内存条的速度</p>
+<p>对比操作系统“读者”“写者”问题</p>
+<p><strong>可以同时读不可同时写</strong></p>
+<h3 id="多体并行存储器"><a href="#多体并行存储器" class="headerlink" title="多体并行存储器"></a>多体并行存储器</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710161341565.jpg" alt="image-20210710161341565"></p>
+<p>低位交叉编制可以降低存取时间</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710161553901.jpg" alt="image-20210710161553901"><br>$$<br>\begin{align}<br>&amp;m&#x3D;\frac{T}{r}满足\<br>\end{align}<br>$$<br>例题：</p>
+<p>（1）计算连续取n个存储字的时间？</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710162114004.jpg" alt="image-20210710162114004"></p>
+<p>（2）给定一个地址x，如何确定它属于第几个存储体？</p>
+<p>例如：01101在哪个存储体？</p>
+<p>法1：直接通过低位体号求得<br>$$<br>\begin{align}<br>&amp;01\Rightarrow M_1 \<br>\end{align}<br>$$</p>
+<p>法2：对地址的十进制数求余<br>$$<br>\begin{align}<br>&amp;(01101)<em>2&#x3D;(13)</em>{10},13\pmod{4}&#x3D;1\Rightarrow M_1 \<br>\end{align}<br>$$</p>
+<h3 id="多模块存储器"><a href="#多模块存储器" class="headerlink" title="多模块存储器"></a>多模块存储器</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710162816363.jpg" alt="image-20210710162816363"></p>
+<p>一次读一行</p>
+<p>适用于连续读写</p>
+<h2 id="高速缓冲存储器Cache"><a href="#高速缓冲存储器Cache" class="headerlink" title="高速缓冲存储器Cache"></a>高速缓冲存储器Cache</h2><h3 id="Cache工作原理"><a href="#Cache工作原理" class="headerlink" title="Cache工作原理"></a>Cache工作原理</h3><h3 id="程序的局部性原理"><a href="#程序的局部性原理" class="headerlink" title="程序的局部性原理"></a>程序的局部性原理</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710163921097.jpg" alt="image-20210710163921097"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710163946556.jpg" alt="image-20210710163946556"></p>
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710164353024.jpg" alt="image-20210710164353024"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710164408453.jpg" alt="image-20210710164408453"></p>
+<p>例题</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710164220590.jpg" alt="image-20210710164220590"><br>$$<br>\begin{align}<br>&amp;设Cache的访存周期为t,主存的存取周期为5t\<br>&amp;(1)Cache和主存同时访问:\<br>&amp;命中时访问时间为t,未命中访问时间为5t\<br>&amp;\bar t&#x3D;0.95t+5t(1-0.95)&#x3D;1.2t\<br>&amp;\eta&#x3D;\frac{5t}{\bar t}\sim4.17\<br>&amp;(2)先访问Cache再访问主存:\<br>&amp;命中时访问时间为t,未命中访问时间为t+5t\<br>&amp;\bar t&#x3D;0.95t+6t(1-0.95)&#x3D;1.25t\<br>&amp;\eta&#x3D;\frac{5t}{1.25t}&#x3D;4\<br>\end{align}<br>$$</p>
+<h4 id="剩余问题"><a href="#剩余问题" class="headerlink" title="剩余问题"></a>剩余问题</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710210420887.jpg" alt="image-20210710210420887"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710210349239.jpg" alt="image-20210710210349239"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710210433763.jpg" alt="image-20210710210433763"></p>
+<h2 id="Cache-主存映射方式"><a href="#Cache-主存映射方式" class="headerlink" title="Cache-主存映射方式"></a>Cache-主存映射方式</h2><h3 id="三种映射"><a href="#三种映射" class="headerlink" title="三种映射"></a>三种映射</h3><p>添加标记为和有效位</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215134861.jpg" alt="image-20210710215134861"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215455572.jpg" alt="image-20210710215455572"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215530770.jpg" alt="image-20210710215530770"></p>
+<h4 id="全相联映射"><a href="#全相联映射" class="headerlink" title="全相联映射"></a>全相联映射</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710215516325.jpg" alt="image-20210710215516325"></p>
+<h4 id="直接映射"><a href="#直接映射" class="headerlink" title="直接映射"></a>直接映射</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710220127614.jpg" alt="image-20210710220127614"></p>
+<p>当两块冲突时无法解决</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710220109978.jpg" alt="image-20210710220109978"></p>
+<p>对标记位进行优化：<br>$$<br>\begin{align}<br>&amp;主存块号%2^3\Leftrightarrow 留下最后三位二进制数\<br>&amp;即：Cache总块数&#x3D;2^n,则主存块号末尾n位反映它在Cache中的位置\<br>&amp;将主存块号的其余位作为标记\<br>\end{align}<br>$$<br><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710220724351.jpg" alt="image-20210710220724351"></p>
+<p>CPU访存：</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710221911745.jpg" alt="image-20210710221911745"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710221918451.jpg" alt="image-20210710221918451"></p>
+<h4 id="组相联映射"><a href="#组相联映射" class="headerlink" title="组相联映射"></a>组相联映射</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222204893.jpg" alt="image-20210710222204893"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222220339.jpg" alt="image-20210710222220339"></p>
+<p>CPU访存：</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222248750.jpg" alt="image-20210710222248750"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222307630.jpg" alt="image-20210710222307630"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210710222439230.jpg" alt="image-20210710222439230"></p>
+<h2 id="Cache替换算法（解决Cache被装满的问题）"><a href="#Cache替换算法（解决Cache被装满的问题）" class="headerlink" title="Cache替换算法（解决Cache被装满的问题）"></a>Cache替换算法（解决Cache被装满的问题）</h2><p>Cache完全装满了才需要替换，需要在全局选择替换哪一块</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711160553389.jpg" alt="image-20210711160553389"></p>
+<p>如果对应位置非空，直接替换</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711160615752.jpg" alt="image-20210711160615752"></p>
+<p>分组内满了才需要替换需要在分组内选择替换哪一块</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711160634017.jpg" alt="image-20210711160634017"></p>
+<h3 id="随机算法-RAND"><a href="#随机算法-RAND" class="headerlink" title="随机算法(RAND)"></a>随机算法(RAND)</h3><p>随机选择一块替换</p>
+<h4 id="算法性能："><a href="#算法性能：" class="headerlink" title="算法性能："></a>算法性能：</h4><p>实现简单，但完全没有考虑局部性原理，命中率低，实际效果很不稳定</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711164435610.jpg" alt="image-20210711164435610"></p>
+<h3 id="先进先出算法-FIFO"><a href="#先进先出算法-FIFO" class="headerlink" title="先进先出算法(FIFO)"></a>先进先出算法(FIFO)</h3><p>替换最先调入Cache的块</p>
+<p>实现简单，最开始#0#1#2#3放入Cache，之后轮流替换#0#1#2#3</p>
+<h4 id="算法性能：-1"><a href="#算法性能：-1" class="headerlink" title="算法性能："></a>算法性能：</h4><p>没有考虑局部性原理，最先调入Cache的块也可能是被频繁访问的</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711164119361.jpg" alt="image-20210711164119361"></p>
+<p><strong>抖动现象</strong>：频繁的换入换出现象（刚被替换掉块很快又被调入）</p>
+<h3 id="近期最少使用算法-LRU"><a href="#近期最少使用算法-LRU" class="headerlink" title="近期最少使用算法(LRU)"></a>近期最少使用算法(LRU)</h3><p>为每一个Cache块设置一个计数器，用于记录每个Cache块已经有多久没有被访问了，当Cache满后替换计数器最大的<br>$$<br>\begin{align}<br>&amp;Cache块的总数&#x3D;2^n,则计数器只需要n位,且Cache装满后所有计数器的值一定不重复\<br>\end{align}<br>$$<br>（1）命中时，所命中的行的计数器清零，比其低的计数器加1，其余不变</p>
+<p>（2）未命中且还有空闲行时，新装入的行的计数器置0，其余非空闲行全加1</p>
+<p>（3）未命中且无空闲行时，计数值最大的行的信息块被淘汰，新装行的块的计数器置0，其余全加1</p>
+<h4 id="算法性能：-2"><a href="#算法性能：-2" class="headerlink" title="算法性能："></a>算法性能：</h4><p>基于局部性原理，近期被访问过的主存块，在不久的将来也很可能再次被访问，因此淘汰最久没访问过的块是合理的，实际运行效果优秀，Cache命中率高</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711165057274.jpg" alt="image-20210711165057274"></p>
+<h3 id="最不经常使用算法-LFU"><a href="#最不经常使用算法-LFU" class="headerlink" title="最不经常使用算法(LFU)"></a>最不经常使用算法(LFU)</h3><p>为每一个Cache块设置一个计数器，用于记录每个Cache块被访问过几次，当Cache满后替换计数器最小的</p>
+<h4 id="算法性能：-3"><a href="#算法性能：-3" class="headerlink" title="算法性能："></a>算法性能：</h4><p>曾经被经常访问的主存块在未来不一定会用到，算法实际运行效果不让LRU</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711165307359.jpg" alt="image-20210711165307359"></p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711170550046.jpg" alt="image-20210711170550046"></p>
+<h2 id="Cache的写策略（如何保持Cache里的数据和内存里的数据保持一致）"><a href="#Cache的写策略（如何保持Cache里的数据和内存里的数据保持一致）" class="headerlink" title="Cache的写策略（如何保持Cache里的数据和内存里的数据保持一致）"></a>Cache的写策略（如何保持Cache里的数据和内存里的数据保持一致）</h2><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711170803320.jpg" alt="image-20210711170803320"></p>
+<h3 id="写命中"><a href="#写命中" class="headerlink" title="写命中"></a>写命中</h3><h4 id="写回法"><a href="#写回法" class="headerlink" title="写回法"></a>写回法</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171649574.jpg" alt="image-20210711171649574"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171635987.jpg" alt="image-20210711171635987"></p>
+<h4 id="全写法"><a href="#全写法" class="headerlink" title="全写法"></a>全写法</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171740689.jpg" alt="image-20210711171740689"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171728702.jpg" alt="image-20210711171728702"></p>
+<h3 id="写不命中"><a href="#写不命中" class="headerlink" title="写不命中"></a>写不命中</h3><h4 id="写分配法"><a href="#写分配法" class="headerlink" title="写分配法"></a>写分配法</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171818049.jpg" alt="image-20210711171818049"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171805412.jpg" alt="image-20210711171805412"></p>
+<h4 id="非写分配法"><a href="#非写分配法" class="headerlink" title="非写分配法"></a>非写分配法</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171901658.jpg" alt="image-20210711171901658"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171842837.jpg" alt="image-20210711171842837"></p>
+<h3 id="多级Cache"><a href="#多级Cache" class="headerlink" title="多级Cache"></a>多级Cache</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171945407.jpg" alt="image-20210711171945407"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711171935529.jpg" alt="image-20210711171935529"></p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711172016851.jpg" alt="image-20210711172016851"></p>
+<h2 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h2><h3 id="页式虚拟存储器"><a href="#页式虚拟存储器" class="headerlink" title="页式虚拟存储器"></a>页式虚拟存储器</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174441630.jpg" alt="image-20210711174441630"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174351441.jpg" alt="image-20210711174351441"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174421728.jpg" alt="image-20210711174421728"></p>
+<h4 id="虚地址与实地址"><a href="#虚地址与实地址" class="headerlink" title="虚地址与实地址"></a>虚地址与实地址</h4><p>Cache-主存分块是面向物理地址</p>
+<p>程序的分页是面向逻辑地址</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711174630870.jpg" alt="image-20210711174630870"></p>
+<h4 id="页表（记录逻辑页号与主存块号的关系）"><a href="#页表（记录逻辑页号与主存块号的关系）" class="headerlink" title="页表（记录逻辑页号与主存块号的关系）"></a>页表（记录逻辑页号与主存块号的关系）</h4><p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175036358.jpg" alt="image-20210711175036358"></p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175016518.jpg" alt="image-20210711175016518"></p>
+<p>查询过程:</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175220931.jpg" alt="image-20210711175220931"></p>
+<h4 id="快表-TLB"><a href="#快表-TLB" class="headerlink" title="快表(TLB)"></a>快表(TLB)</h4><p>快表是一种相联存储器，可以按内容访存</p>
+<p>将近期访问的页表项放入更高速的存储器中可加快地址转换的速度</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711175747460.jpg" alt="image-20210711175747460"></p>
+<h5 id="快表和Cache的区别"><a href="#快表和Cache的区别" class="headerlink" title="快表和Cache的区别"></a>快表和Cache的区别</h5><p>快表中储存的是页表项的副本</p>
+<p>Cache中储存的是主存块的副本</p>
+<h5 id="访问策略"><a href="#访问策略" class="headerlink" title="访问策略"></a>访问策略</h5><p>访问快表根据页号查找</p>
+<p>命中根据快表页表项得到主存块号</p>
+<p>去Cache中寻找相应主存的副本</p>
+<p>命中访存</p>
+<p><img src="https://raw.githubusercontent.com/ebxeax/images/main/image-20210711181558957.jpg" alt="image-20210711181558957"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ebxeax.github.io/2023/08/09/PCC_003_%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" data-id="cll501mal001gjebifmni35hj" data-title="" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/08/09/PCC_004_%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/08/09/PCC_002_data_expression_and_calculate/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/interpreter-C/">interpreter C</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/09/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%C2%B7%E9%A1%B5%E5%BC%8F%C2%B7%E6%AE%B5%E5%BC%8F%C2%B7%E6%AE%B5%E9%A1%B5%E5%BC%8F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/YOLO_001_from-CNN-to-YOLOv1/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/PCC_007_%E7%AC%AC%E4%B8%83%E7%AB%A0-I%E2%81%84O/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 ebx<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

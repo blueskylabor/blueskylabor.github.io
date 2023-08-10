@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>ebxeax</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="二分类问题使用SVM和BP神经网络的样例【Speech and not-speech detection】 - ebxeax - 博客园 (cnblogs.com)   数据集采用浙大胡老师的编程作业为例 Assignment 1: Speech and not-speech detectionDDL：2017-10-17 Tue.（1）This assignment is carried ou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ebxeax">
+<meta property="og:url" content="http://ebxeax.github.io/2023/08/09/ML_002_%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E4%BD%BF%E7%94%A8SVM%E5%92%8CBP%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A0%B7%E4%BE%8B[Speech-and-not-speech-detection]/index.html">
+<meta property="og:site_name" content="ebxeax">
+<meta property="og:description" content="二分类问题使用SVM和BP神经网络的样例【Speech and not-speech detection】 - ebxeax - 博客园 (cnblogs.com)   数据集采用浙大胡老师的编程作业为例 Assignment 1: Speech and not-speech detectionDDL：2017-10-17 Tue.（1）This assignment is carried ou">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://files-cdn.cnblogs.com/files/Carraway-Space/Speech_and_notSpeech_detection.bmp">
+<meta property="article:published_time" content="2023-08-09T03:00:40.779Z">
+<meta property="article:modified_time" content="2023-08-07T08:49:48.000Z">
+<meta property="article:author" content="ebx">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://files-cdn.cnblogs.com/files/Carraway-Space/Speech_and_notSpeech_detection.bmp">
+  
+    <link rel="alternate" href="/atom.xml" title="ebxeax" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ebxeax</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ebxeax.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ML_002_二分类问题使用SVM和BP神经网络的样例[Speech-and-not-speech-detection]" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/09/ML_002_%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E4%BD%BF%E7%94%A8SVM%E5%92%8CBP%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A0%B7%E4%BE%8B%5BSpeech-and-not-speech-detection%5D/" class="article-date">
+  <time class="dt-published" datetime="2023-08-09T03:00:40.779Z" itemprop="datePublished">2023-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Carraway-Space/p/13520316.html">二分类问题使用SVM和BP神经网络的样例【Speech and not-speech detection】 - ebxeax - 博客园 (cnblogs.com)</a></p>
+<blockquote>
+<blockquote>
+<p>数据集采用浙大胡老师的编程作业为例</p>
+<p>Assignment 1: Speech and not-speech detection<br>DDL：2017-10-17 Tue.<br>（1）This assignment is carried out by group. You could choose your teammate freely. Each group consists of at most 3 students. </p>
+<p>（2）The ‘training.data’ contains the training data. It is from our project to detect whether a person in a video speaks or not. The features are generated in the following way, which may help you making the most of these features.<br>1、Get the mouth region M from the origin image based on facial landmark detection.<br>2、Calculate dense optic flow between mouth region of last frame and the current frame and generate a score S that depicts the motion of mouth.<br>3、Calculate the parameter V which depicts the degree of mouth opening.<br>4、For frame i, we also calculate the S and V for its previous and next frames.<br>5、Hence, we generate a 6 dimensional feature vector is X&#x3D;[Si-1 Si Si+1 Vi-1 Vi Vi+1].<br>6、The label is at the end of each line, where +1 represents speaking, and -1 represents not-speaking.</p>
+<p>In the training.data, the ratio of positive examples over negative examples is 1:1. Keep this in mind, for if you find your training error or validation error is larger than 50%, that means your solution learns nothing and performs worse than guessing.</p>
+<p>（4）You need to write a program to predict speaking or not speaking.<br>For convenience to evaluate your grogram, please use this name for your matlab main function:<br>speakingDetection.m<br>Note about the interface in your function ‘speakingDetection.m’, it should be:<br>function predY&#x3D; speakingDetection (X)<br>X: The input feature vectors, which is an N<em>6 matrix, where N is the number of feature vectors.<br>predY: The output vector to predict labels of X, which is a N</em>1 vector, and predY(i) &#x3D; 1 or -1. </p>
+<p>Besides MATLAB, you also use Python, as long as you hold the interface protocol above. Note we don’t recommend C&#x2F;C++.</p>
+<p>（5）You can use ANY method to solve this problem.</p>
+</blockquote>
+</blockquote>
+<p>问题分析</p>
+<blockquote>
+<blockquote>
+<ol>
+<li>数据解读：training.data数据为N*7的matrix矩阵，其中6维vector向量为输入特征 input feature</li>
+<li>数据预处理：将training.data读入，进行dataset的分割，分为6维向量input feature和1维向量label,分割前对数据集进行shuffle，分出测试集以及训练集</li>
+<li>模型选择：该问题为数据的分类，采用分类算法可以解决，本文以SVM和BP神经网络为样例</li>
+<li>建立相应模型求解问题</li>
+<li>调节参数，达到最优解</li>
+</ol>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>BP神经网络代码</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">clc;</span><br><span class="line">clear;</span><br><span class="line">data=importdata(<span class="string">&#x27;training.data&#x27;</span>);</span><br><span class="line">P=data(:,<span class="number">1</span>:<span class="number">6</span>);</span><br><span class="line">T=data(:,<span class="number">7</span>);</span><br><span class="line">temp = randperm(<span class="built_in">size</span>(data,<span class="number">1</span>));</span><br><span class="line"><span class="comment">% 训练集——5000个样本</span></span><br><span class="line">P_train = P(temp(<span class="number">1</span>:<span class="number">5000</span>),:)&#x27;;</span><br><span class="line">T_train = T(temp(<span class="number">1</span>:<span class="number">5000</span>),:)&#x27;;</span><br><span class="line">P_test = P(temp(<span class="keyword">end</span><span class="number">-50</span>:<span class="keyword">end</span>),:)&#x27;;</span><br><span class="line">T_test = T(temp(<span class="keyword">end</span><span class="number">-50</span>:<span class="keyword">end</span>),:)&#x27;;</span><br><span class="line">N=<span class="built_in">size</span>(T_test,<span class="number">2</span>);</span><br><span class="line">[pn,minp,maxp,tn,mint,maxt]=premnmx(P_train,T_train);</span><br><span class="line">[pn_,minp_,maxp_,tn_,mint_,maxt_]=premnmx(P_test,T_test);</span><br><span class="line">dx=[<span class="number">-1</span>,<span class="number">1</span>;<span class="number">-1</span>,<span class="number">1</span>;<span class="number">-1</span>,<span class="number">1</span>;<span class="number">-1</span>,<span class="number">1</span>;<span class="number">-1</span>,<span class="number">1</span>;<span class="number">-1</span>,<span class="number">1</span>];</span><br><span class="line">net=newff(dx,[<span class="number">6</span>,<span class="number">10</span>,<span class="number">1</span>]);</span><br><span class="line">net.trainParam.goal = <span class="number">0</span>;</span><br><span class="line">net.trainParam.epochs = <span class="number">30000</span>;</span><br><span class="line">net.trainParam.lr = <span class="number">0.03</span>;</span><br><span class="line">net.trainParam.showWindow = <span class="number">1</span>;</span><br><span class="line">net = train(net,pn,tn);</span><br><span class="line">an = sim(net,pn_);</span><br><span class="line">a=postmnmx(an,mint_,maxt_);</span><br><span class="line"><span class="built_in">disp</span>([<span class="string">&#x27;mse: &#x27;</span> num2str(mse(T_test-an))]);</span><br><span class="line">count=<span class="number">0</span>;</span><br><span class="line">error=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:N</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">abs</span>(a(<span class="built_in">i</span>)-T_test(<span class="built_in">i</span>))&lt;<span class="number">0.2</span></span><br><span class="line">        count=count+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        error=error+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">accuracy=count/(count+error)</span><br><span class="line"><span class="built_in">figure</span></span><br><span class="line"><span class="built_in">plot</span>(<span class="number">1</span>:N,T_test,<span class="string">&#x27;b*&#x27;</span>,<span class="number">1</span>:N,a,<span class="string">&#x27;ro&#x27;</span>)</span><br><span class="line"><span class="built_in">legend</span>(<span class="string">&#x27;真实值&#x27;</span>,<span class="string">&#x27;预测值&#x27;</span>)</span><br><span class="line">xlabel(<span class="string">&#x27;预测样本&#x27;</span>)</span><br><span class="line">ylabel(<span class="string">&#x27;实值&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果 accuracy：0.7059 mse: 1.0783</p>
+<p><img src="https://files-cdn.cnblogs.com/files/Carraway-Space/Speech_and_notSpeech_detection.bmp" alt="img"></p>
+<p>SVM代码[采用LIBSVM]</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">data=importdata(<span class="string">&#x27;training.data&#x27;</span>);</span><br><span class="line">features=data(:,<span class="number">1</span>:<span class="number">6</span>);<span class="comment">%特征列表</span></span><br><span class="line">classlabel=data(:,<span class="number">7</span>);<span class="comment">%对应类别</span></span><br><span class="line">n = randperm(<span class="built_in">size</span>(features,<span class="number">1</span>));<span class="comment">%随机产生训练集和测试集</span></span><br><span class="line"><span class="comment">%% 训练集--70个样本</span></span><br><span class="line">train_features=features(n(<span class="number">1</span>:<span class="number">44000</span>),:);</span><br><span class="line">train_label=classlabel(n(<span class="number">1</span>:<span class="number">44000</span>),:);</span><br><span class="line"><span class="comment">%% 测试集--30个样本</span></span><br><span class="line">test_features=features(n(<span class="number">44000</span>:<span class="keyword">end</span>),:);</span><br><span class="line">test_label=classlabel(n(<span class="number">44000</span>:<span class="keyword">end</span>),:);</span><br><span class="line"><span class="comment">%% 数据归一化</span></span><br><span class="line"> [Train_features,PS] = mapminmax(train_features&#x27;);</span><br><span class="line"> Train_features = Train_features&#x27;; </span><br><span class="line"> Test_features = mapminmax(<span class="string">&#x27;apply&#x27;</span>,test_features&#x27;,PS); </span><br><span class="line"> Test_features = Test_features&#x27;;</span><br><span class="line"> <span class="comment">%% 创建/训练SVM模型</span></span><br><span class="line">model = svmtrain(train_label,Train_features,<span class="string">&#x27;-h 0&#x27;</span>);</span><br><span class="line"><span class="comment">%% SVM仿真测试</span></span><br><span class="line">[predict_train_label] = svmpredict(train_label,Train_features,model);</span><br><span class="line">[predict_test_label] = svmpredict(test_label,Test_features,model);</span><br><span class="line"><span class="comment">%% 打印准确率</span></span><br><span class="line">compare_train = (train_label == predict_train_label);</span><br><span class="line">accuracy_train = sum(compare_train)/<span class="built_in">size</span>(train_label,<span class="number">1</span>)*<span class="number">100</span>; </span><br><span class="line">fprintf(<span class="string">&#x27;训练集准确率：%f\n&#x27;</span>,accuracy_train)</span><br><span class="line">compare_test = (test_label == predict_test_label);</span><br><span class="line">accuracy_test = sum(compare_test)/<span class="built_in">size</span>(test_label,<span class="number">1</span>)*<span class="number">100</span>;</span><br><span class="line">fprintf(<span class="string">&#x27;测试集准确率：%f\n&#x27;</span>,accuracy_test)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.................*</span><br><span class="line">optimization finished, #iter = <span class="number">17228</span></span><br><span class="line">nu = <span class="number">0.658959</span></span><br><span class="line">obj = <span class="number">-28684.553581</span>, rho = <span class="number">4.599546</span></span><br><span class="line">nSV = <span class="number">29001</span>, nBSV = <span class="number">28987</span></span><br><span class="line">Total nSV = <span class="number">29001</span></span><br><span class="line">Accuracy = <span class="number">71.7273</span><span class="comment">% (31560/44000) (classification)</span></span><br><span class="line">Accuracy = <span class="number">71.1948</span><span class="comment">% (435/611) (classification)</span></span><br><span class="line">训练集准确率：<span class="number">71.727273</span></span><br><span class="line">测试集准确率：<span class="number">71.194763</span></span><br></pre></td></tr></table></figure>
+
+<p>结果分析</p>
+<p>两种模型按照题目要求可以达到错误率低于50%的要求，相对而言，SVM在该问题上无论是性能还是效果都略高于BP神经网络算法，SVM更适用于小样本的分类问题</p>
+</blockquote>
+<blockquote>
+<p>文件下载：training.data</p>
+<p><a target="_blank" rel="noopener" href="https://files.cnblogs.com/files/Carraway-Space/training.zip">https://files.cnblogs.com/files/Carraway-Space/training.zip</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ebxeax.github.io/2023/08/09/ML_002_%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E4%BD%BF%E7%94%A8SVM%E5%92%8CBP%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A0%B7%E4%BE%8B[Speech-and-not-speech-detection]/" data-id="cll501mab001ajebi9uv89c1r" data-title="" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/08/09/OS_001_introduction-Operator-System/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/08/09/ML_001_introduce-machine-learning/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/interpreter-C/">interpreter C</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/09/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%C2%B7%E9%A1%B5%E5%BC%8F%C2%B7%E6%AE%B5%E5%BC%8F%C2%B7%E6%AE%B5%E9%A1%B5%E5%BC%8F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/YOLO_001_from-CNN-to-YOLOv1/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/PCC_007_%E7%AC%AC%E4%B8%83%E7%AB%A0-I%E2%81%84O/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 ebx<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

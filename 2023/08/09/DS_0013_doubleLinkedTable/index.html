@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>ebxeax</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Data Structure Notes  123456Author : &quot;ebxeax&quot;Version : 1.0Refresh Date 2020.11.26Description : Just record and review some points about Data Structure.Have mistakes that please correct it yo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ebxeax">
+<meta property="og:url" content="http://ebxeax.github.io/2023/08/09/DS_0013_doubleLinkedTable/index.html">
+<meta property="og:site_name" content="ebxeax">
+<meta property="og:description" content="Data Structure Notes  123456Author : &quot;ebxeax&quot;Version : 1.0Refresh Date 2020.11.26Description : Just record and review some points about Data Structure.Have mistakes that please correct it yo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-09T03:00:39.305Z">
+<meta property="article:modified_time" content="2023-08-07T08:49:42.000Z">
+<meta property="article:author" content="ebx">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="ebxeax" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ebxeax</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ebxeax.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-DS_0013_doubleLinkedTable" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/09/DS_0013_doubleLinkedTable/" class="article-date">
+  <time class="dt-published" datetime="2023-08-09T03:00:39.305Z" itemprop="datePublished">2023-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Data Structure Notes</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Author : &quot;ebxeax&quot;</span><br><span class="line">Version : 1.0</span><br><span class="line">Refresh Date 2020.11.26</span><br><span class="line">Description : </span><br><span class="line">Just record and review some points about Data Structure.</span><br><span class="line">Have mistakes that please correct it yourself.</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>链式存储双链表</p>
+<blockquote>
+<p>双链表宏定义</p>
+<blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">DNode</span>&#123;</span><br><span class="line"> ElemType data;</span><br><span class="line"> <span class="keyword">struct</span> <span class="title class_">DNode</span> *prior,*next;</span><br><span class="line">&#125;DNode,*DLinkList;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">Node1--&gt;Node2--&gt;Node3--&gt;more--&gt;Noden</span><br><span class="line">Noden--&gt;more--&gt;Node3--&gt;Node2--&gt;Node1</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>1.插入</p>
+<blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(DLinkList &amp;L,ElemType e,<span class="type">int</span> i)</span></span>&#123;</span><br><span class="line"> 	DNode*p,*s;</span><br><span class="line">	p=<span class="built_in">getElem</span>(L,i<span class="number">-1</span>);</span><br><span class="line"> 	s.data=e;</span><br><span class="line"> 	s-&gt;next=p-&gt;next;</span><br><span class="line"> 	p-&gt;next-&gt;prior=s;</span><br><span class="line"> 	s-&gt;prior=p;</span><br><span class="line"> 	p-&gt;next=s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">   Node1--&gt;Node2--&gt;|x|Node3--&gt;Node4--&gt;more--&gt;Noden</span><br><span class="line">Noden--&gt;more--&gt;Node4--&gt;Node3--&gt;|x|Node2--&gt;Node1</span><br><span class="line">   Node5</span><br><span class="line">   s--&gt;Node5</span><br><span class="line">   p--&gt;Node2</span><br><span class="line">   Node5--&gt;|new|Node2</span><br><span class="line">   Node5--&gt;|new|Node3</span><br><span class="line">Node2--&gt;|new|Node5</span><br><span class="line">Node3--&gt;|new|Node5</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>2.删除</p>
+<blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">del</span><span class="params">(DLinkList &amp;L,<span class="type">int</span> i)</span></span>&#123;</span><br><span class="line">    	DNode*p,*s;</span><br><span class="line">	s=<span class="built_in">getElem</span>(L,i<span class="number">-1</span>);</span><br><span class="line">    	s-&gt;prior-&gt;next=s-&gt;next;</span><br><span class="line">    	p=s-&gt;prior;</span><br><span class="line">    	s-&gt;next-&gt;prior=s-&gt;prior;</span><br><span class="line">    	<span class="built_in">free</span>(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">Node1--&gt;Node2--&gt;|x|Node3--&gt;|x|Node4--&gt;more--&gt;Noden</span><br><span class="line">Noden--&gt;more--&gt;Node4--&gt;|x|Node3--&gt;|x|Node2--&gt;Node1</span><br><span class="line">s--&gt;|point to|Node3</span><br><span class="line">Node4--&gt;|new|Node2</span><br><span class="line">Node2--&gt;|new|Node4</span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ebxeax.github.io/2023/08/09/DS_0013_doubleLinkedTable/" data-id="cll501m9h000ojebi6rsqet0h" data-title="" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/08/09/DS_0014_RecircleLinkedList/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/08/09/DS_0012_linearTable/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/interpreter-C/">interpreter C</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/09/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%C2%B7%E9%A1%B5%E5%BC%8F%C2%B7%E6%AE%B5%E5%BC%8F%C2%B7%E6%AE%B5%E9%A1%B5%E5%BC%8F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/YOLO_001_from-CNN-to-YOLOv1/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/PCC_007_%E7%AC%AC%E4%B8%83%E7%AB%A0-I%E2%81%84O/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 ebx<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
