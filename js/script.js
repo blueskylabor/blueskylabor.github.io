@@ -621,8 +621,8 @@ function bind() {
     }
 
     initArticle();
-    $(".article_number").text($("#whynotjeffjeff_site_posts_number").val());
-    $(".site_word_count").text($("#whynotjeffjeff_site_word_count").val());
+    $(".article_number").text($("#blueskylabor_site_posts_number").val());
+    $(".site_word_count").text($("#blueskylabor_site_word_count").val());
     $(".site_uv").text($("#busuanzi_value_site_uv").text());
     $("#busuanzi_value_site_uv").bind("DOMNodeInserted", function (e) {
         $(".site_uv").text($(this).text())
